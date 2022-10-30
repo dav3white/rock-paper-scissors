@@ -40,7 +40,6 @@ function game() {
     for (let i = 1; i <= 5; i++) {
 
         console.log("Round: ", i);
-        console.log('\n');
         playerSelection = prompt("Enter Player Choice");
         computerSelection = getComputerChoice();
     
@@ -48,30 +47,31 @@ function game() {
         playerSelection = playerSelection.toUpperCase();
         computerSelection = computerSelection.toUpperCase();        
 
-        console.log("Player chooses: ", playerSelection);
-        console.log("Computer chooses: ", computerSelection);
+        // Show player choices
+        console.log("Player: ", playerSelection, " // Computer: ",computerSelection);
 
         let roundWinner = playRound(playerSelection, computerSelection);
 
+        // Adjust scores if necessary
         switch (roundWinner) {
             case "Player": {
                 playerScore += 1;
                 console.log("Player wins round ", i);
-                console.log("Player Score: ", playerScore, " // Computer Score: ", computerScore)
+                console.log("Player: ", playerScore, " // ", "Computer: ", computerScore)
                 console.log('\n');
                 break;
             }
             case "Computer": {
                 computerScore += 1;
                 console.log("Computer wins round ", i);
-                console.log("Player Score: ", playerScore, " // Computer Score: ", computerScore)
+                console.log("Player: ", playerScore, " // ", "Computer: ", computerScore)
                 console.log('\n');
                 break;
             }
             case "Draw": {
                 i--;
                 console.log("This round was a draw");
-                console.log("Player Score: ", playerScore, " // Computer Score: ", computerScore)
+                console.log("Player: ", playerScore, " // ", "Computer: ", computerScore)
                 console.log('\n');
                 break;
             }

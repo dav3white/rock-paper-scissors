@@ -24,16 +24,21 @@ function playRound(playerSelection) {
 }
 
 function updateResults(winner, playerSelection, computerSelection) {
-    choices.textContent = "Player chooses " + playerSelection + " and computer chooses " + computerSelection;
+    choices.textContent = "Player chooses " + playerSelection + " / computer chooses " + computerSelection;
     if (winner == 'computerwins') {
         computerScore++;
+        roundwinner.textContent = "Computer wins this round"; 
         results.textContent = "Player Score: " + playerScore + " -- " + "Computer Score: " + computerScore;
     } else if (winner == 'playerwins') {
         playerScore++;
+        roundwinner.textContent = "Player wins this round"; 
         results.textContent = "Player Score: " + playerScore + " -- " + "Computer Score: " + computerScore;
     } else {
-        results.textContent = "Player Score: " + playerScore + " -- " + "Computer Score: " + computerScore;
+        roundwinner.textContent = "It's a draw";  
     }
+    if (computerScore == 5) { roundwinner.textContent = " Computer was the first to 5!"; computerScore = 0; playerScore = 0; }
+    if (playerScore == 5) { roundwinner.textContent = " Player was the first to 5!"; computerScore = 0; playerScore = 0; }
+
 }
 
 
@@ -47,6 +52,7 @@ scissors.addEventListener('click', () => { playRound(scissors.id) });
 
 const results = document.querySelector('#results');
 const choices = document.querySelector('#choices');
+const roundwinner = document.querySelector('#winner');
 
 var playerScore = 0;
 var computerScore = 0;

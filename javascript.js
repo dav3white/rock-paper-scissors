@@ -1,93 +1,52 @@
 function getComputerChoice() {
     // Return random choice of the 3 valid options
-    var validChoices = ['Rock', 'Paper', 'Scissors'];
+    var validChoices = ['rock', 'paper', 'scissors'];
     return validChoices[Math.floor(Math.random() * validChoices.length)];
 }
 
-function playRound(playerSelection, computerSelection) {
-    
-    // Returns winner of round
-
-    switch (playerSelection) {
-        case "ROCK":
-            if (computerSelection == "ROCK") {
-                return "Draw";
-            } else if (computerSelection == "PAPER") {
-                return "Computer";
-            } else return "Player";
-        case "PAPER":
-            if (computerSelection == "PAPER") {
-                return "Draw";
-            } else if (computerSelection == "SCISSORS") {
-                return "Computer";
-            } else return "Player";
-       case "SCISSORS":
-            if (computerSelection == "SCISSORS") {
-                return "Draw";
-            } else if (computerSelection == "ROCK") {
-                return "Computer";
-            } else return "Player";        
-        default:
-            return "Invalid Input"
+function playRound(playerSelection) {
+    computerSelection = getComputerChoice();
+    if (playerSelection == computerSelection) {
+        updateResults('draw', playerSelection, computerSelection); 
+    } else if (playerSelection == "rock" && computerSelection == "scissors") {
+        updateResults('playerwins', playerSelection, computerSelection)
+    } else if (playerSelection == "rock" && computerSelection == "paper") {
+        updateResults('computerwins', playerSelection, computerSelection)
+    } else if (playerSelection == "paper" && computerSelection == "rock") {
+        updateResults('playerwins', playerSelection, computerSelection)
+    } else if (playerSelection == "paper" && computerSelection == "scissors") {
+        updateResults('computerwins', playerSelection, computerSelection)
+    } else if (playerSelection == "scissors" && computerSelection == "paper") {
+        updateResults('playerwins', playerSelection, computerSelection)
+    } else if (playerSelection == "scissors" && computerSelection == "rock") {
+        updateResults('computerwins', playerSelection, computerSelection)
     }
 }
 
-function game() {
-
-    var playerScore = 0;
-    var computerScore = 0;
-
-    for (let i = 1; i <= 5; i++) {
-
-        console.log("Round: ", i);
-        playerSelection = prompt("Enter Player Choice");
-        computerSelection = getComputerChoice();
-    
-        // Convert input to upper case
-        playerSelection = playerSelection.toUpperCase();
-        computerSelection = computerSelection.toUpperCase();        
-
-        // Show player choices
-        console.log("Player: ", playerSelection, " // Computer: ",computerSelection);
-
-        let roundWinner = playRound(playerSelection, computerSelection);
-
-        // Adjust scores if necessary
-        switch (roundWinner) {
-            case "Player": {
-                playerScore += 1;
-                console.log("Player wins round ", i);
-                console.log("Player: ", playerScore, " // ", "Computer: ", computerScore)
-                console.log('\n');
-                break;
-            }
-            case "Computer": {
-                computerScore += 1;
-                console.log("Computer wins round ", i);
-                console.log("Player: ", playerScore, " // ", "Computer: ", computerScore)
-                console.log('\n');
-                break;
-            }
-            case "Draw": {
-                i--;
-                console.log("This round was a draw");
-                console.log("Player: ", playerScore, " // ", "Computer: ", computerScore)
-                console.log('\n');
-                break;
-            }
-            default: {
-                i--;
-                console.log("Invalid Input");
-                console.log('\n');
-            }
-        }
+function updateResults(winner, playerSelection, computerSelection) {
+    choices.textContent = "Player chooses " + playerSelection + " and computer chooses " + computerSelection;
+    if (winner == 'computerwins') {
+        computerScore++;
+        results.textContent = "Player Score: " + playerScore + " -- " + "Computer Score: " + computerScore;
+    } else if (winner == 'playerwins') {
+        playerScore++;
+        results.textContent = "Player Score: " + playerScore + " -- " + "Computer Score: " + computerScore;
+    } else {
+        results.textContent = "Player Score: " + playerScore + " -- " + "Computer Score: " + computerScore;
     }
-    if (playerScore == computerScore) {
-        console.log("It's a draw!");
-    } else if (playerScore < computerScore) {
-        console.log("Player Loses!");
-    } else console.log("Player Wins!");
 }
-game();
 
 
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+
+rock.addEventListener('click', () => { playRound(rock.id) });
+paper.addEventListener('click', () => { playRound(paper.id) });
+scissors.addEventListener('click', () => { playRound(scissors.id) });
+
+const results = document.querySelector('#results');
+const choices = document.querySelector('#choices');
+
+var playerScore = 0;
+var computerScore = 0;
